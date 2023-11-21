@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 export function PageLayout() {
 	return (
-		<div>
+		<div className="flex flex-col min-h-[100svh]">
 			<Navbar />
 			<Outlet />
 			<Footer />
