@@ -21,8 +21,8 @@ export function App() {
 					/>
 					<Route path="users/:userId" element={<ProfilePage />} />
 					<Route path="signup" element={<SignupPage />} />
+					<Route path="*" element={<NotFound />} />
 				</Route>
-				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</Router>
 	);
