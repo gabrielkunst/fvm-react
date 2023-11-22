@@ -1,3 +1,25 @@
+import { FooterLink } from "./FooterLink";
+
+const FOOTER_LINKS_CATEGORIES = [
+	{ label: "Jardinagem", href: "/products?category=gardening" },
+	{ label: "Construção", href: "/products?category=construction" },
+	{ label: "Limpeza", href: "/products?category=cleaning" },
+	{ label: "Elétrica", href: "/products?category=electrical" },
+	{ label: "Pintura", href: "/products?category=painting" },
+];
+
+const FOOTER_LINKS = [
+	{ label: "Home", href: "/" },
+	{ label: "Registro", href: "/register" },
+	{ label: "Produtos", href: "/products" },
+];
+
+const FOOTER_LINKS_SOCIAL = [
+	{ label: "Instagram", href: "https://www.instagram.com/" },
+	{ label: "Facebook", href: "https://www.facebook.com/" },
+	{ label: "Twitter", href: "https://twitter.com/" },
+];
+
 export function Footer() {
 	return (
 		<footer className="flex flex-wrap items-center justify-around px-4 py-8 text-center border-t border-neutral-200">
@@ -6,46 +28,9 @@ export function Footer() {
 					Categorias
 				</h3>
 				<ul className="grid items-center justify-center grid-cols-2 gap-x-8 gap-y-2 max-w-[300px] mx-auto">
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products?category=gardening"
-						>
-							Jardinagem
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products?category=construction"
-						>
-							Construção
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products?category=cleaning"
-						>
-							Limpeza
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products?category=electrical"
-						>
-							Elétrica
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products?category=painting"
-						>
-							Pintura
-						</a>
-					</li>
+					{FOOTER_LINKS_CATEGORIES.map(({ href, label }) => (
+						<FooterLink key={href} href={href} label={label} />
+					))}
 				</ul>
 			</div>
 			<div className="min-w-[200px]">
@@ -53,30 +38,9 @@ export function Footer() {
 					Links
 				</h3>
 				<ul className="flex flex-col gap-2">
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/"
-						>
-							Home
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/register"
-						>
-							Registro
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/products"
-						>
-							Produtos
-						</a>
-					</li>
+					{FOOTER_LINKS.map(({ href, label }) => (
+						<FooterLink key={href} href={href} label={label} />
+					))}
 				</ul>
 			</div>
 			<div className="min-w-[200px]">
@@ -84,30 +48,9 @@ export function Footer() {
 					Fale conosco
 				</h3>
 				<ul className="flex flex-col gap-2">
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/"
-						>
-							Whatsapp
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/"
-						>
-							Instagram
-						</a>
-					</li>
-					<li>
-						<a
-							className="transition-all duration-300 ease-in-out hover:text-secondary pageLink"
-							href="/"
-						>
-							Email
-						</a>
-					</li>
+					{FOOTER_LINKS_SOCIAL.map(({ href, label }) => (
+						<FooterLink key={href} href={href} label={label} />
+					))}
 				</ul>
 			</div>
 		</footer>
