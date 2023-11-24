@@ -1,11 +1,11 @@
 import { CustomLink } from "../CustomLink";
-import { Carousel } from "./Carousel";
 import { HomePageSection } from "./HomePageSection";
-import CarouselImage1 from "@/assets/carouselImage1.webp";
 import CarouselImage2 from "@/assets/carouselImage2.webp";
-import CarouselImage3 from "@/assets/carouselImage3.webp";
+// import { Carousel } from "./Carousel";
+// import CarouselImage1 from "@/assets/carouselImage1.webp";
+// import CarouselImage3 from "@/assets/carouselImage3.webp";
 
-const CAROUSEL_IMAGES = [
+/* const CAROUSEL_IMAGES = [
 	{
 		image: CarouselImage1,
 		label: "Primeira imagem",
@@ -18,7 +18,7 @@ const CAROUSEL_IMAGES = [
 		image: CarouselImage3,
 		label: "Terceira imagem",
 	},
-];
+]; */
 
 export function HomePageHero() {
 	return (
@@ -41,15 +41,15 @@ export function HomePageHero() {
 			</div>
 			<div className="absolute inset-0 -z-10">
 				<img
-					className="object-cover w-full h-full md:hidden"
+					className="object-cover w-full h-full "
 					src={CarouselImage2}
 					alt="Imagem de fundo da página inicial"
 				/>
-				<Carousel
+				{/* <Carousel
 					className="hidden md:block"
 					images={CAROUSEL_IMAGES}
 					timeout={2500}
-				/>
+				/> */}
 			</div>
 		</HomePageSection>
 	);
