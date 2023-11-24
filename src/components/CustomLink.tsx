@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 const variations = {
@@ -16,29 +17,32 @@ const variations = {
 	},
 };
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface CustomLinkProps {
 	type?: keyof typeof variations.type;
 	size?: keyof typeof variations.sizes;
 	rounded?: keyof typeof variations.rounded;
+	href: string;
+	className?: string;
+	children: React.ReactNode;
 }
 
-export function Button({
+export function CustomLink({
 	children,
 	type = "primary",
 	size = "md",
 	rounded = "lg",
 	className,
-	...props
-}: ButtonProps) {
+	href,
+}: CustomLinkProps) {
 	const typeClass = variations.type[type];
 	const sizeClass = variations.sizes[size];
 	const roundedClass = variations.rounded[rounded];
 
 	return (
-		<button
-			{...props}
+		<Link
+			to={href}
 			className={twMerge(
-				"transition-all duration-300 ease-in-out px-4 py-3 w-fit",
+				"transition-all block duration-300 ease-in-out px-4 py-3 w-fit",
 				typeClass,
 				sizeClass,
 				roundedClass,
@@ -46,6 +50,6 @@ export function Button({
 			)}
 		>
 			{children}
-		</button>
+		</Link>
 	);
 }
