@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Button } from "./Button";
-import { Logo } from "./Logo";
 import { NavbarLink } from "./NavbarLink";
 import { NavbarSearchForm } from "./NavbarSearchForm";
+import { Logo } from "../Logo";
+import { Button } from "../Button";
 
 const NAVBAR_LINKS = [
 	{ label: "Home", href: "/" },
@@ -12,7 +12,7 @@ const NAVBAR_LINKS = [
 
 export function Navbar() {
 	return (
-		<nav className="bg-custom-white flex items-center border-b border-neutral-200 justify-between overflow-hidden py-3 px-5 max-h-[80px] min-h-[80px] lg:gap-10">
+		<nav className="bg-custom-white flex sticky top-0 items-center border-b border-neutral-200 justify-between overflow-hidden py-3 px-5 max-h-[80px] z-[99] min-h-[80px] lg:gap-10 ">
 			<div className="flex items-center justify-center gap-3">
 				<Link to="/" className="w-[55px] h-full">
 					<Logo />
