@@ -3,6 +3,8 @@ import { NavbarLink } from "./NavbarLink";
 import { NavbarSearchForm } from "./NavbarSearchForm";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
+import { useModal } from "@/hooks/useModal";
+import { LoginModal } from "../LoginModal";
 
 const NAVBAR_LINKS = [
 	{ label: "Home", href: "/" },
@@ -11,6 +13,15 @@ const NAVBAR_LINKS = [
 ];
 
 export function Navbar() {
+	const { openModal, closeModal } = useModal();
+
+	const handleOpenModal = () => {
+		openModal({
+			content: <LoginModal onClose={closeModal} />,
+			className: "max-w-[500px]",
+		});
+	};
+
 	return (
 		<nav className="bg-custom-white flex sticky top-0 items-center border-b border-neutral-200 justify-between overflow-hidden py-3 px-5 max-h-[80px] z-[99] min-h-[80px] lg:gap-10 ">
 			<div className="flex items-center justify-center gap-3">
@@ -27,8 +38,9 @@ export function Navbar() {
 				</ul>
 				<div className="flex items-center justify-center gap-2">
 					<Button
+						onClick={handleOpenModal}
 						rounded="full"
-						type="outlined"
+						variation="outlined"
 						className="min-w-[120px]"
 						size="sm"
 					>
