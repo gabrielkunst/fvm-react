@@ -24,7 +24,7 @@ export function Input({
 			type={type}
 			placeholder={placeholder}
 			className={twMerge(
-				"p-2 border rounded-lg  w-full disabled:opacity- outline-transparent disabled:cursor-not-allowed disabled:bg-gray-200",
+				"p-2 border rounded-lg  w-full disabled:opacity-80 outline-transparent disabled:cursor-not-allowed disabled:bg-gray-200",
 				!isError && "focus:outline-primary",
 				isError && "border-red-500 outline-red-500",
 				className
