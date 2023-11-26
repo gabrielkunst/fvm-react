@@ -18,7 +18,7 @@ export function NavbarSearchForm() {
 				onChange={(e) => setQuery(e.target.value)}
 				type="text"
 				placeholder="Buscar ferramentas"
-				className="flex-1 text-sm text-custom-black placeholder:text-custom-gray"
+				className="flex-1 text-sm outline-none text-custom-black placeholder:text-custom-gray"
 			/>
 			<button type="submit" className="text-neutral-300">
 				<Search size={16} className="text-custom-gray" />
