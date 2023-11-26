@@ -10,7 +10,7 @@ const FOOTER_LINKS_CATEGORIES = [
 
 const FOOTER_LINKS = [
 	{ label: "Home", href: "/" },
-	{ label: "Registro", href: "/register" },
+	{ label: "Registro", href: "/signup" },
 	{ label: "Produtos", href: "/products" },
 ];
 

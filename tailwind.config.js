@@ -6,7 +6,7 @@ export default {
 			colors: {
 				"custom-white": "#ffffff",
 				"custom-black": "#000000",
-				"custom-gray": "#999999",
+				"custom-gray": "#e6e9ec",
 				primary: "#2552a7",
 				secondary: "#4480ef",
 				"neutral-100": "#f5f6f7",
@@ -18,6 +18,31 @@ export default {
 			},
 			screens: {
 				xs: "425px",
+				"3xl": "2000px",
+			},
+			keyframes: {
+				"fade-down": {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(-10px)",
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0)",
+					},
+				},
+				"fade-in": {
+					"0%": {
+						opacity: "0",
+					},
+					"100%": {
+						opacity: "1",
+					},
+				},
+			},
+			animation: {
+				"fade-down": "fade-down 0.5s ease-out",
+				"fade-in": "fade-in 0.5s ease-out",
 			},
 		},
 	},
