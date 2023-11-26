@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordInput } from "./PasswordInput";
 import { useLogin } from "@/hooks/useLogin";
 import { InputErrorMessage } from "./InputErrorMessage";
+import { ModalTitle } from "./ModalTitle";
 
 interface LoginModalProps {
 	onClose: () => void;
@@ -37,7 +38,7 @@ export function LoginModal({ onClose }: LoginModalProps) {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<h2 className="mb-3 text-xl font-medium">Login</h2>
+			<ModalTitle>Login</ModalTitle>
 			<div className="flex flex-col w-full gap-2">
 				<div>
 					<Input

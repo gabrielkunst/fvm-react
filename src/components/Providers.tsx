@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "@/context/AuthContextProvider";
 import { ModalContextProvider } from "@/context/ModalContextProvider";
 
 interface ProvidersProps {
@@ -5,5 +6,9 @@ interface ProvidersProps {
 }
 
 export function Providers({ children }: ProvidersProps) {
-	return <ModalContextProvider>{children}</ModalContextProvider>;
+	return (
+		<AuthContextProvider>
+			<ModalContextProvider>{children}</ModalContextProvider>
+		</AuthContextProvider>
+	);
 }

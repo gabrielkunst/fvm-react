@@ -8,7 +8,7 @@ export function PageLayout() {
 	return (
 		<Providers>
 			<Toaster />
-			<div className="flex flex-col min-h-[100svh]">
+			<div className="flex flex-col min-h-[100svh] animate-fade-in">
 				<Navbar />
 				<main className="flex flex-col flex-1">
 					<Outlet />
