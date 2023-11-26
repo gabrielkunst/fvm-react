@@ -16,7 +16,7 @@ const formSchema = z.object({
 		.string()
 		.min(3, "Descrição muito curta")
 		.max(255, "Descrição muito longa"),
-	price: z
+	priceInCents: z
 		.string()
 		.min(1, "Preço é obrigatório")
 		.refine(
@@ -43,7 +43,7 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			...defaultValues,
-			price: defaultValues?.price.toString(),
+			priceInCents: defaultValues?.priceInCents.toString(),
 		},
 	});
 	const isProductEdit = !!defaultValues;
@@ -102,13 +102,13 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 					<Input
 						placeholder="Preço"
 						type="number"
-						register={register("price")}
+						register={register("priceInCents")}
 						disabled={isLoading}
-						isError={!!errors.price}
+						isError={!!errors.priceInCents}
 					/>
-					{errors.price && (
+					{errors.priceInCents && (
 						<InputErrorMessage>
-							{errors.price.message}
+							{errors.priceInCents.message}
 						</InputErrorMessage>
 					)}
 				</div>

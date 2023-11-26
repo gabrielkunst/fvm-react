@@ -6,7 +6,7 @@ export default {
 			colors: {
 				"custom-white": "#ffffff",
 				"custom-black": "#000000",
-				"custom-gray": "#999999",
+				"custom-gray": "#e6e9ec",
 				primary: "#2552a7",
 				secondary: "#4480ef",
 				"neutral-100": "#f5f6f7",

@@ -4,7 +4,7 @@ export class Product implements ProductType {
 	id: string;
 	name: string;
 	description: string;
-	price: string;
+	priceInCents: string;
 	createdAt: Date;
 	image: string;
 	owner: string;
@@ -13,7 +13,7 @@ export class Product implements ProductType {
 		id,
 		name,
 		description,
-		price,
+		priceInCents,
 		createdAt,
 		owner,
 		image,
@@ -21,9 +21,17 @@ export class Product implements ProductType {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.price = price;
+		this.priceInCents = priceInCents;
 		this.createdAt = createdAt;
 		this.image = image;
 		this.owner = owner;
+	}
+
+	get formattedPrice() {
+		const price = Number(this.priceInCents) / 100;
+		return new Intl.NumberFormat("pt-BR", {
+			style: "currency",
+			currency: "BRL",
+		}).format(price);
 	}
 }
