@@ -10,11 +10,11 @@ export function ProductsList() {
 			className={
 				!isLoading && products.length === 0
 					? "flex-1 flex justify-center items-center"
-					: "grid grid-cols-1 gap-4 mt-4 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6"
+					: "grid grid-cols-1 gap-4 mt-4 xs:grid-cols-2 md:grid-cols-3 xl:grixd-cols-4 2xl:grid-cols-5 3xl:grid-cols-6"
 			}
 		>
 			{isLoading &&
-				Array.from({ length: 10 }).map((_, i) => (
+				Array.from({ length: 4 }).map((_, i) => (
 					<ProductCardSkeleton key={i} />
 				))}
 			{!isLoading &&
