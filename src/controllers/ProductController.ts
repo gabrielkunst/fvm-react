@@ -39,11 +39,15 @@ async function fetchProducts({
 		const querySnapshot = await getDocs(queryRef);
 
 		const products: Product[] = querySnapshot.docs.map((doc) => {
-			const productData = doc.data() as ProductFirestoreType;
+			const productData = doc.data();
+			const formattedCreatedAt = new Date(
+				productData.createdAt.seconds * 1000
+			);
 
 			return new Product({
+				...(productData as ProductType),
 				id: doc.id,
-				...productData,
+				createdAt: formattedCreatedAt,
 			});
 		});
 
