@@ -55,7 +55,7 @@ export function ProductPage() {
 				setProduct(product);
 				setIsLoading(false);
 			} catch (error) {
-				console.log(error);
+				console.error(error);
 				toast.error("Erro ao carregar produto");
 				navigate("/products");
 			}

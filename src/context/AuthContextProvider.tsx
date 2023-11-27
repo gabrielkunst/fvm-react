@@ -46,8 +46,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 				userId: firebaseUser.uid,
 			});
 
-			console.log(userDocData);
-
 			if (!userDocData) {
 				toast.error("Erro ao carregar usuário");
 				await auth.signOut();

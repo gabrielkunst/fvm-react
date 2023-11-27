@@ -13,11 +13,15 @@ import { useEffect, useState } from "react";
 export function ProfilePage() {
 	// const [user, setUser] = useState<User | null>(null);
 	const { user } = useAuth();
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [products, setProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
-		const fetchUser = async () => {};
+		const fetchUser = async () => {
+			setTimeout(() => {
+				setIsLoading(false);
+			}, 1000);
+		};
 
 		fetchUser();
 	}, []);
@@ -29,13 +33,13 @@ export function ProfilePage() {
 		<div className="flex-1 flex flex-col p-5 sm:p-10 md:p-12 min-h-[calc(100svh-80px)] md:min-h-0">
 			<PageTitle className="mb-2">Contato</PageTitle>
 			<main
-				className={`flex flex-col gap-2 flex-1 ${
+				className={`flex flex-1 ${
 					isLoading && "items-center justify-center"
 				}`}
 			>
 				{isLoading && <LoadingSpinner />}
 				{!isLoading && user && (
-					<>
+					<div className="flex flex-col flex-1 gap-2 animate-fade-in">
 						<aside className="flex flex-col gap-2 p-2 border rounded-lg">
 							<h3 className="text-lg font-semibold">
 								{user.name}
@@ -85,7 +89,7 @@ export function ProfilePage() {
 								)}
 							</div>
 						</section>
-					</>
+					</div>
 				)}
 			</main>
 		</div>
