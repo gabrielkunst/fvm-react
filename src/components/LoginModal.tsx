@@ -37,7 +37,7 @@ export function LoginModal({ onClose }: LoginModalProps) {
 			await onLogin(data);
 			onClose();
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 
