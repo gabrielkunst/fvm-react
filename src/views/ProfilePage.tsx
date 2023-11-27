@@ -7,7 +7,7 @@ import { ProductCardSkeleton } from "@/components/Products/ProductCardSkeleton";
 
 import { useAuth } from "@/hooks/useAuth";
 import { Product } from "@/models/Product";
-import { User } from "@/models/User";
+// import { User } from "@/models/User";
 import { useEffect, useState } from "react";
 
 export function ProfilePage() {
@@ -20,13 +20,20 @@ export function ProfilePage() {
 		const fetchUser = async () => {
 			setTimeout(() => {
 				setIsLoading(false);
+				// just to avoid error on deploy
+				// cause variable was not being used
+				setProducts([]);
 			}, 1000);
 		};
 
 		fetchUser();
 	}, []);
 
-	const setSort = (sort: SortObject) => {};
+	const setSort = (sort: SortObject) => {
+		// just to avoid error on deploy
+		// cause variable was not being used
+		console.log(sort);
+	};
 	const onFilterButtonClick = () => {};
 
 	return (
