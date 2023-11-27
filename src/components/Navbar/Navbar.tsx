@@ -17,7 +17,6 @@ export function Navbar() {
 
 	const NAVBAR_LINKS = [
 		{ label: "Home", href: "/" },
-		{ label: "Meus Anúncios", href: `users/${user?.id}` },
 		{ label: "Produtos", href: "/products" },
 	];
 
@@ -73,8 +72,8 @@ export function Navbar() {
 				</Link>
 				<NavbarSearchForm />
 			</div>
-			<div className="flex items-center justify-between gap-10 lg:flex-1 max-w-[600px]">
-				<ul className="items-center flex-1 hidden gap-4 justify-evenly lg:flex lg:flex-1">
+			<div className="flex items-center justify-end gap-10 lg:flex-1 max-w-[600px]">
+				<ul className="items-center justify-center hidden gap-10 lg:flex">
 					{NAVBAR_LINKS.map(({ href, label }) => (
 						<NavbarLink key={href} href={href} label={label} />
 					))}

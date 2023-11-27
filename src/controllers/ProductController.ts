@@ -100,10 +100,47 @@ async function readProductDoc(id: string) {
 	return product;
 }
 
+interface FetchListedProductsParams {
+	products: string[];
+}
+
+interface FetchListedProductsParams {
+	products: string[];
+}
+
+async function fetchListedProducts({ products }: FetchListedProductsParams) {
+	const collectionRef = collection(firestore, "products");
+
+	const productsData: Product[] = [];
+
+	for (const productId of products) {
+		const docRef = doc(collectionRef, productId);
+		const docSnapshot = await getDoc(docRef);
+
+		if (docSnapshot.exists()) {
+			const { createdAt, ...productData } = docSnapshot.data();
+			const formattedCreatedAt = new Date(createdAt.seconds * 1000);
+
+			productsData.push(
+				new Product({
+					...(productData as ProductType),
+					id: docSnapshot.id,
+					createdAt: formattedCreatedAt,
+				})
+			);
+		} else {
+			console.error(`Document with ID ${productId} not found.`);
+		}
+	}
+
+	return productsData;
+}
+
 export const ProductController = {
 	fetchProducts,
 	createProductDoc,
 	updateProductDoc,
 	deleteProductDoc,
 	readProductDoc,
+	fetchListedProducts,
 };

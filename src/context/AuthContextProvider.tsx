@@ -13,12 +13,14 @@ interface AuthContextProviderProps {
 
 interface AuthContextProps {
 	user: User | null;
+	isUserLoggedIn: boolean;
 	login: (user: User) => void;
 	logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
 	user: null,
+	isUserLoggedIn: false,
 	login: () => {},
 	logout: () => {},
 });
@@ -26,13 +28,16 @@ export const AuthContext = createContext<AuthContextProps>({
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState<User | null>(null);
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
 	const login = (user: User) => {
 		setUser(user);
+		setIsUserLoggedIn(true);
 	};
 
 	const logout = () => {
 		setUser(null);
+		setIsUserLoggedIn(false);
 	};
 
 	useEffect(() => {
@@ -54,7 +59,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 			}
 
 			const loggedUser = new User(userDocData as UserType);
-			setUser(loggedUser);
+			login(loggedUser);
 			setIsLoading(false);
 		});
 
@@ -66,7 +71,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, login, logout }}>
+		<AuthContext.Provider value={{ user, isUserLoggedIn, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

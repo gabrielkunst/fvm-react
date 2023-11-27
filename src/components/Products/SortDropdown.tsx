@@ -25,10 +25,10 @@ const SORT_OPTIONS: SortOptions[] = [
 ];
 
 interface SortDropdownProps {
-	onSort: (sortObject: SortObject) => void;
+	setSort: (sortObject: SortObject) => void;
 }
 
-export function SortDropdown({ onSort }: SortDropdownProps) {
+export function SortDropdown({ setSort }: SortDropdownProps) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const dropdownButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -71,9 +71,10 @@ export function SortDropdown({ onSort }: SortDropdownProps) {
 				>
 					{SORT_OPTIONS.map(({ label, value }) => (
 						<button
+							key={label}
 							className="flex items-center justify-center gap-2 p-2 transition-all duration-200 hover:bg-gray-200"
 							onClick={() => {
-								onSort(value);
+								setSort(value);
 								setIsDropdownOpen(false);
 							}}
 						>
