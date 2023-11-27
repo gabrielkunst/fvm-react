@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./useAuth";
 import { User } from "@/models/User";
+import { UserType } from "@/@types/UserType";
 
 interface OnLoginProps {
 	email: string;
@@ -33,7 +34,7 @@ export function useLogin() {
 				throw new Error("User doc not found!");
 			}
 
-			const loggedUser = new User(userDocData);
+			const loggedUser = new User(userDocData as UserType);
 			login(loggedUser);
 
 			toast.success("Login feito com sucesso!");

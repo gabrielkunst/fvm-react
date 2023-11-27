@@ -7,9 +7,12 @@ import {
 	Query,
 	addDoc,
 	collection,
+	doc,
+	getDoc,
 	getDocs,
 	orderBy,
 	query,
+	updateDoc,
 	where,
 } from "firebase/firestore";
 
@@ -74,11 +77,79 @@ async function createProductDoc({ userId, data }: CreateProductDocParams) {
 	}
 }
 
-async function updateProductDoc() {}
+interface UpdateProductDocParams {
+	id: string;
+	newData: Partial<ProductType>;
+}
+
+async function updateProductDoc({ id, newData }: UpdateProductDocParams) {
+	try {
+		const collectionRef = collection(firestore, "products");
+		const docRef = doc(collectionRef, id);
+
+		await updateDoc(docRef, newData);
+	} catch (error) {
+		console.error(error);
+	}
+}
 
 async function deleteProductDoc() {}
 
-async function readProductDoc() {}
+async function readProductDoc(id: string) {
+	const collectionRef = collection(firestore, "products");
+	const docRef = doc(collectionRef, id);
+
+	const docSnapshot = await getDoc(docRef);
+
+	if (!docSnapshot.exists()) {
+		throw new Error("Product not found");
+	}
+
+	const productData = docSnapshot.data() as ProductFirestoreType;
+
+	const product = new Product({
+		id: docSnapshot.id,
+		...productData,
+	});
+
+	return product;
+}
+
+interface FetchListedProductsParams {
+	products: string[];
+}
+
+interface FetchListedProductsParams {
+	products: string[];
+}
+
+async function fetchListedProducts({ products }: FetchListedProductsParams) {
+	const collectionRef = collection(firestore, "products");
+
+	const productsData: Product[] = [];
+
+	for (const productId of products) {
+		const docRef = doc(collectionRef, productId);
+		const docSnapshot = await getDoc(docRef);
+
+		if (docSnapshot.exists()) {
+			const { createdAt, ...productData } = docSnapshot.data();
+			const formattedCreatedAt = new Date(createdAt.seconds * 1000);
+
+			productsData.push(
+				new Product({
+					...(productData as ProductType),
+					id: docSnapshot.id,
+					createdAt: formattedCreatedAt,
+				})
+			);
+		} else {
+			console.error(`Document with ID ${productId} not found.`);
+		}
+	}
+
+	return productsData;
+}
 
 export const ProductController = {
 	fetchProducts,
@@ -86,4 +157,5 @@ export const ProductController = {
 	updateProductDoc,
 	deleteProductDoc,
 	readProductDoc,
+	fetchListedProducts,
 };

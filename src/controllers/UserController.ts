@@ -1,5 +1,6 @@
 import { UserType } from "@/@types/UserType";
 import { firestore } from "@/config/firebase";
+import { User } from "@/models/User";
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 interface CreateUserDocParams {
@@ -37,23 +38,25 @@ interface ReadUserDocParams {
 }
 
 async function readUserDoc({ userId }: ReadUserDocParams) {
-	try {
-		const collectionRef = collection(firestore, "users");
-		const docRef = doc(collectionRef, userId);
+	const collectionRef = collection(firestore, "users");
+	const docRef = doc(collectionRef, userId);
 
-		const docSnap = await getDoc(docRef);
+	const docSnap = await getDoc(docRef);
 
-		if (!docSnap.exists()) {
-			throw new Error("Document not found");
-		}
-
-		return {
-			...(docSnap.data() as UserType),
-			id: docSnap.id,
-		};
-	} catch (error) {
-		console.error(error);
+	if (!docSnap.exists()) {
+		throw new Error("Document not found");
 	}
+
+	const { createdAt, ...userData } = docSnap.data();
+	const formattedData = new Date(createdAt.seconds * 1000);
+
+	const newUser = new User({
+		...(userData as UserType),
+		createdAt: formattedData,
+		id: docSnap.id,
+	});
+
+	return newUser;
 }
 
 interface UpdateUserDocParams {

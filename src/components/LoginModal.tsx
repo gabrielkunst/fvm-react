@@ -33,7 +33,12 @@ export function LoginModal({ onClose }: LoginModalProps) {
 	});
 
 	const onSubmit: SubmitHandler<FormSchema> = async (data) => {
-		await onLogin(data);
+		try {
+			await onLogin(data);
+			onClose();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
