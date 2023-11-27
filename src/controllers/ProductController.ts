@@ -15,7 +15,6 @@ import {
 	updateDoc,
 	where,
 } from "firebase/firestore";
-import toast from "react-hot-toast";
 
 interface FetchProducstParams {
 	categories?: string[];
