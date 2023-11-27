@@ -7,6 +7,8 @@ import {
 	Query,
 	addDoc,
 	collection,
+	doc,
+	getDoc,
 	getDocs,
 	orderBy,
 	query,
@@ -78,7 +80,25 @@ async function updateProductDoc() {}
 
 async function deleteProductDoc() {}
 
-async function readProductDoc() {}
+async function readProductDoc(id: string) {
+	const collectionRef = collection(firestore, "products");
+	const docRef = doc(collectionRef, id);
+
+	const docSnapshot = await getDoc(docRef);
+
+	if (!docSnapshot.exists()) {
+		throw new Error("Product not found");
+	}
+
+	const productData = docSnapshot.data() as ProductFirestoreType;
+
+	const product = new Product({
+		id: docSnapshot.id,
+		...productData,
+	});
+
+	return product;
+}
 
 export const ProductController = {
 	fetchProducts,

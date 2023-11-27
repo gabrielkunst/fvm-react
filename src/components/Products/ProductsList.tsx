@@ -5,8 +5,6 @@ import { ProductCardSkeleton } from "./ProductCardSkeleton";
 export function ProductsList() {
 	const { isLoading, products } = useProducts();
 
-	console.log(products);
-
 	return (
 		<div
 			className={
