@@ -89,7 +89,7 @@ export function ProductPage() {
 								{product.formattedPrice}
 							</p>
 							<p>
-								À <strong>79km</strong> de distância
+								À <strong>12km</strong> de distância
 							</p>
 							<p className="flex items-center justify-center gap-2 md:justify-start">
 								<MapPin /> Foz do Iguaçu - PR
