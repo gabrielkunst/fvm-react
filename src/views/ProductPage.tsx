@@ -8,8 +8,6 @@ import { useNavigate, useParams } from "react-router";
 import FallbackImage from "@/assets/fallbackImage.png";
 import { Button } from "@/components/Button";
 import { Flag, Heart, HeartOff, MapPin, Share2 } from "lucide-react";
-import { useModal } from "@/hooks/useModal";
-import { ContactModal } from "@/components/Product/ContactModal";
 
 export function ProductPage() {
 	const [product, setProduct] = useState<Product | null>(null);

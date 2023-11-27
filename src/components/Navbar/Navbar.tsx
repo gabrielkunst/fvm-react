@@ -10,16 +10,16 @@ import { ProductForm } from "../ProductForm";
 import { ProductController } from "@/controllers/ProductController";
 import { UserController } from "@/controllers/UserController";
 
-const NAVBAR_LINKS = [
-	{ label: "Home", href: "/" },
-	{ label: "Meus Anúncios", href: "/my-products" },
-	{ label: "Produtos", href: "/products" },
-];
-
 export function Navbar() {
 	const { openModal, closeModal } = useModal();
 	const { user } = useAuth();
 	const navigate = useNavigate();
+
+	const NAVBAR_LINKS = [
+		{ label: "Home", href: "/" },
+		{ label: "Meus Anúncios", href: `users/${user?.id}` },
+		{ label: "Produtos", href: "/products" },
+	];
 
 	const handleLoginModal = () => {
 		openModal({
