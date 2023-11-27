@@ -12,8 +12,10 @@ import {
 	getDocs,
 	orderBy,
 	query,
+	updateDoc,
 	where,
 } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 interface FetchProducstParams {
 	categories?: string[];
@@ -76,7 +78,21 @@ async function createProductDoc({ userId, data }: CreateProductDocParams) {
 	}
 }
 
-async function updateProductDoc() {}
+interface UpdateProductDocParams {
+	id: string;
+	newData: Partial<ProductType>;
+}
+
+async function updateProductDoc({ id, newData }: UpdateProductDocParams) {
+	try {
+		const collectionRef = collection(firestore, "products");
+		const docRef = doc(collectionRef, id);
+
+		await updateDoc(docRef, newData);
+	} catch (error) {
+		console.error(error);
+	}
+}
 
 async function deleteProductDoc() {}
 

@@ -7,13 +7,18 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import FallbackImage from "@/assets/fallbackImage.png";
 import { Button } from "@/components/Button";
-import { Flag, Heart, HeartOff, MapPin, Share2 } from "lucide-react";
+import { Flag, Heart, HeartOff, MapPin, Pencil, Share2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { ProductForm } from "@/components/ProductForm";
+import { useModal } from "@/hooks/useModal";
 
 export function ProductPage() {
+	const { user } = useAuth();
 	const [product, setProduct] = useState<Product | null>(null);
 	const [onImageError, setOnImageError] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [isFavorite, setIsFavorite] = useState<boolean>(false);
+	const { openModal, closeModal } = useModal();
 	const params = useParams();
 	const navigate = useNavigate();
 
@@ -35,6 +40,34 @@ export function ProductPage() {
 
 	const handleContact = () => {
 		navigate(`/users/${product?.owner}`);
+	};
+
+	const handleAddProductClick = () => {
+		openModal({
+			content: (
+				<ProductForm
+					defaultValues={product!}
+					onFormSubmit={async (data) => {
+						try {
+							await ProductController.updateProductDoc({
+								id: product!.id,
+								newData: data,
+							});
+
+							const editedProduct = new Product({
+								...product!,
+								...data,
+							});
+
+							setProduct(editedProduct);
+						} finally {
+							closeModal();
+						}
+					}}
+				/>
+			),
+			className: "max-w-[500px]",
+		});
 	};
 
 	useEffect(() => {
@@ -97,6 +130,18 @@ export function ProductPage() {
 						</div>
 						<div className="flex flex-col justify-between gap-2 md:flex-row">
 							<div className="flex flex-col gap-2 md:flex-row">
+								{user?.id === product.owner && (
+									<Button
+										onClick={handleAddProductClick}
+										className="w-full md:w-fit"
+										variation="outlined"
+									>
+										<Pencil />
+										<span className="md:hidden">
+											Editar
+										</span>
+									</Button>
+								)}
 								<Button
 									onClick={handleFavorite}
 									className="w-full md:w-fit"

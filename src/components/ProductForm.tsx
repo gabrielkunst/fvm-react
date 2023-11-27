@@ -59,7 +59,11 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 			);
 		} catch (error) {
 			console.error(error);
-			toast.error("Erro ao criar produto");
+			toast.error(
+				isProductEdit
+					? "Erro ao editar produto"
+					: "Erro ao criar produto"
+			);
 		} finally {
 			setIsLoading(false);
 		}
