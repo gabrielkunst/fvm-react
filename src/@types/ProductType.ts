@@ -2,7 +2,7 @@ export interface ProductType {
 	id: string;
 	name: string;
 	description: string;
-	priceInCents: string;
+	priceInCents: number;
 	createdAt: Date;
 	image: string;
 	owner: string;
@@ -11,7 +11,7 @@ export interface ProductType {
 export interface ProductFirestoreType {
 	name: string;
 	description: string;
-	priceInCents: string;
+	priceInCents: number;
 	createdAt: Date;
 	image: string;
 	owner: string;

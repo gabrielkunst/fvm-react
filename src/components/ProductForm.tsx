@@ -9,6 +9,7 @@ import { Textarea } from "./Textarea";
 import { Button } from "./Button";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ProductType } from "@/@types/ProductType";
 
 const formSchema = z.object({
 	name: z.string().min(3, "Nome muito curto").max(255, "Nome muito longo"),
@@ -16,7 +17,7 @@ const formSchema = z.object({
 		.string()
 		.min(3, "Descrição muito curta")
 		.max(255, "Descrição muito longa"),
-	priceInCents: z
+	price: z
 		.string()
 		.min(1, "Preço é obrigatório")
 		.refine(
@@ -30,7 +31,7 @@ type FormSchema = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
 	defaultValues?: Product;
-	onFormSubmit: (data: FormSchema) => Promise<void>;
+	onFormSubmit: (data: Partial<ProductType>) => Promise<void>;
 }
 
 export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
@@ -43,15 +44,21 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			...defaultValues,
-			priceInCents: defaultValues?.priceInCents.toString(),
+			price: defaultValues?.priceInReals.toString(),
 		},
 	});
 	const isProductEdit = !!defaultValues;
 
+	console.log(defaultValues);
+
 	const onSubmit: SubmitHandler<FormSchema> = async (data) => {
 		try {
 			setIsLoading(true);
-			await onFormSubmit(data);
+			const formattedPrice = Number(data.price) * 100;
+			await onFormSubmit({
+				...data,
+				priceInCents: formattedPrice,
+			});
 			toast.success(
 				isProductEdit
 					? "Produto editado com sucesso"
@@ -106,13 +113,13 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 					<Input
 						placeholder="Preço"
 						type="number"
-						register={register("priceInCents")}
+						register={register("price")}
 						disabled={isLoading}
-						isError={!!errors.priceInCents}
+						isError={!!errors.price}
 					/>
-					{errors.priceInCents && (
+					{errors.price && (
 						<InputErrorMessage>
-							{errors.priceInCents.message}
+							{errors.price.message}
 						</InputErrorMessage>
 					)}
 				</div>
