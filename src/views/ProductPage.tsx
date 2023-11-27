@@ -40,7 +40,7 @@ export function ProductPage() {
 	useEffect(() => {
 		const fetchProduct = async () => {
 			try {
-				const productId = params.productId;
+				const { productId } = params;
 
 				if (!productId) {
 					toast.error("Produto não encontrado");
@@ -65,7 +65,7 @@ export function ProductPage() {
 	}, []);
 
 	return (
-		<div className="flex flex-1 md:items-center  p-5 sm:p-10 md:p-12 min-h-[calc(100svh-80px)] md:min-h-0">
+		<div className="flex flex-1 items-center  p-5 sm:p-10 md:p-12 min-h-[calc(100svh-80px)] md:min-h-0">
 			{isLoading && <LoadingSpinner />}
 			{!isLoading && product && (
 				<div className="flex flex-col gap-4 text-center md:text-left md:flex-row md:max-w-[1200px] w-full max-w-[350px] mx-auto h-fit animate-fade-in">
