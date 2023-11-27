@@ -9,8 +9,8 @@ export function ProductCardSkeleton() {
 					<div className="w-3/4 h-5 bg-gray-200 rounded-md animate-pulse"></div>
 				</div>
 				<div className="flex items-center justify-between ">
-					<div className="w-1/6 h-5 bg-gray-200 rounded-md animate-pulse"></div>
-					<div className="w-1/6 h-5 bg-gray-200 rounded-md animate-pulse"></div>
+					<div className="w-1/5 h-5 bg-gray-200 rounded-md animate-pulse"></div>
+					<div className="w-1/5 h-5 bg-gray-200 rounded-md animate-pulse"></div>
 				</div>
 			</div>
 		</article>

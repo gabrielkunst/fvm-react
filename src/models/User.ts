@@ -14,4 +14,8 @@ export class User implements UserType {
 		this.createdAt = createdAt;
 		this.ownProducts = ownProducts;
 	}
+
+	get memberSince() {
+		return new Intl.DateTimeFormat("pt-BR").format(this.createdAt);
+	}
 }
