@@ -49,8 +49,6 @@ export function ProductForm({ defaultValues, onFormSubmit }: ProductFormProps) {
 	});
 	const isProductEdit = !!defaultValues;
 
-	console.log(defaultValues);
-
 	const onSubmit: SubmitHandler<FormSchema> = async (data) => {
 		try {
 			setIsLoading(true);
