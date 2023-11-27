@@ -1,3 +1,4 @@
+import { UserType } from "@/@types/UserType";
 import { Loading } from "@/components/Loading";
 import { auth } from "@/config/firebase";
 import { UserController } from "@/controllers/UserController";
@@ -45,6 +46,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 				userId: firebaseUser.uid,
 			});
 
+			console.log(userDocData);
+
 			if (!userDocData) {
 				toast.error("Erro ao carregar usuário");
 				await auth.signOut();
@@ -52,7 +55,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 				return;
 			}
 
-			const loggedUser = new User(userDocData);
+			const loggedUser = new User(userDocData as UserType);
 			setUser(loggedUser);
 			setIsLoading(false);
 		});

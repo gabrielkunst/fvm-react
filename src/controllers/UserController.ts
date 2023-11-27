@@ -47,8 +47,12 @@ async function readUserDoc({ userId }: ReadUserDocParams) {
 			throw new Error("Document not found");
 		}
 
+		const userData = docSnap.data();
+		const formattedData = new Date(userData.createdAt.seconds * 1000);
+
 		return {
-			...(docSnap.data() as UserType),
+			...userData,
+			createdAt: formattedData,
 			id: docSnap.id,
 		};
 	} catch (error) {
