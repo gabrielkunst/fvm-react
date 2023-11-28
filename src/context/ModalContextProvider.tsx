@@ -48,16 +48,6 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 		};
 	}, []);
 
-	useEffect(() => {
-		if (modal) {
-			document.body.style.overflow = "hidden";
-			document.body.style.marginRight = "8.5px";
-		} else {
-			document.body.style.overflow = "auto";
-			document.body.style.marginRight = "0px";
-		}
-	}, [modal]);
-
 	return (
 		<ModalContext.Provider
 			value={{
