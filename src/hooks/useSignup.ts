@@ -48,7 +48,7 @@ export function useSignup() {
 
 			login(loggedUser);
 
-			toast.success("Account created successfully!");
+			toast.success("Conta criada com sucesso!");
 
 			navigate("/");
 		} catch (error: any) {
