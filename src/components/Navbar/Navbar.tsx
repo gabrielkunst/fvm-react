@@ -84,9 +84,8 @@ export function Navbar() {
 							user ? handleUserProfileClick() : handleLoginModal()
 						}
 						rounded="full"
-						variation="outlined"
+						variation="secondary"
 						className="min-w-[120px]"
-						size="sm"
 					>
 						{user ? user.name : "Entrar"}
 					</Button>
@@ -96,7 +95,6 @@ export function Navbar() {
 						}
 						rounded="full"
 						className="hidden sm:block min-w-[120px]"
-						size="sm"
 					>
 						Anunciar
 					</Button>

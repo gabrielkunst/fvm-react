@@ -134,7 +134,7 @@ export function ProductPage() {
 									<Button
 										onClick={handleAddProductClick}
 										className="w-full md:w-fit"
-										variation="outlined"
+										variation="secondary"
 									>
 										<Pencil />
 										<span className="md:hidden">
@@ -145,7 +145,7 @@ export function ProductPage() {
 								<Button
 									onClick={handleFavorite}
 									className="w-full md:w-fit"
-									variation="outlined"
+									variation="secondary"
 								>
 									{isFavorite ? <HeartOff /> : <Heart />}
 									<span className="md:hidden">
@@ -157,7 +157,7 @@ export function ProductPage() {
 								<Button
 									onClick={handleShare}
 									className="w-full md:w-fit"
-									variation="outlined"
+									variation="secondary"
 								>
 									<Share2 />
 									<span className="md:hidden">
@@ -167,7 +167,7 @@ export function ProductPage() {
 								<Button
 									onClick={handleReport}
 									className="w-full md:w-fit"
-									variation="outlined"
+									variation="secondary"
 								>
 									<Flag />
 									<span className="md:hidden">Denunciar</span>
