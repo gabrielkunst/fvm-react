@@ -48,6 +48,21 @@ export function ModalContextProvider({ children }: ModalContextProviderProps) {
 		};
 	}, []);
 
+	useEffect(() => {
+		if (modal) {
+			const hasWindowScroll =
+				window.innerHeight < document.body.scrollHeight;
+			document.body.style.overflow = "hidden";
+
+			if (hasWindowScroll) {
+				document.body.style.paddingRight = "8px";
+			}
+		} else {
+			document.body.style.overflow = "auto";
+			document.body.style.paddingRight = "0px";
+		}
+	}, [modal]);
+
 	return (
 		<ModalContext.Provider
 			value={{
