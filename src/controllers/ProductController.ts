@@ -19,6 +19,7 @@ import {
 interface FetchProducstParams {
 	categories?: string[];
 	sort?: SortObject;
+	searchQuery?: string;
 }
 
 async function fetchProducts({

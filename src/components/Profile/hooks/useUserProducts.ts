@@ -1,9 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { SortObject } from "@/@types/SortObjectType";
 import { ProductController } from "@/controllers/ProductController";
 import { Product } from "@/models/Product";
 import { User } from "@/models/User";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 interface useUserProductsProps {
@@ -14,6 +13,20 @@ export function useUserProducts({ user }: useUserProductsProps) {
 	const [isFetching, setIsFetching] = useState(false);
 	const [products, setProducts] = useState<Product[]>([]);
 	const [sort, setSort] = useState<SortObject>();
+
+	const sortedProducts = useMemo(() => {
+		if (!sort) {
+			return products;
+		}
+
+		return products.sort((a, b) => {
+			if (sort.sortDirection === "asc") {
+				return a[sort.sortBy] - b[sort.sortBy];
+			}
+
+			return b[sort.sortBy] - a[sort.sortBy];
+		});
+	}, [sort, products]);
 
 	useEffect(() => {
 		const fetchUserProducts = async () => {
@@ -34,11 +47,11 @@ export function useUserProducts({ user }: useUserProductsProps) {
 		};
 
 		fetchUserProducts();
-	}, [sort]);
+	}, []);
 
 	return {
 		isFetching,
-		products,
+		products: sortedProducts,
 		setSort,
 	};
 }

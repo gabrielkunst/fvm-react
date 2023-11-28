@@ -1,5 +1,6 @@
 import { AuthContextProvider } from "@/context/AuthContextProvider";
 import { ModalContextProvider } from "@/context/ModalContextProvider";
+import { ProductsContextProvider } from "@/context/ProductsContextProvider";
 
 interface ProvidersProps {
 	children: React.ReactNode;
@@ -8,7 +9,9 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
 	return (
 		<AuthContextProvider>
-			<ModalContextProvider>{children}</ModalContextProvider>
+			<ProductsContextProvider>
+				<ModalContextProvider>{children}</ModalContextProvider>
+			</ProductsContextProvider>
 		</AuthContextProvider>
 	);
 }

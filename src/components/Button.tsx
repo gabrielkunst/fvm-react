@@ -1,21 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { twMerge } from "tailwind-merge";
-
-const variations = {
-	variation: {
-		primary: "bg-primary text-custom-white hover:bg-secondary",
-		outlined:
-			"border border-neutral-300 text-neutral-300 hover:bg-secondary hover:text-custom-white hover:border-transparent",
-	},
-	sizes: {
-		sm: "text-sm",
-		md: "text-base",
-	},
-	rounded: {
-		lg: "rounded-lg",
-		full: "rounded-full",
-	},
-};
+import { variations } from "@/styles/shared/ButtonLinkVariations";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variation?: keyof typeof variations.variation;
@@ -24,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	isLoading?: boolean;
 	icon?: React.ReactNode;
 	disabled?: boolean;
+	reverse?: boolean;
 }
 
 export function Button({
@@ -34,6 +20,7 @@ export function Button({
 	className,
 	isLoading = false,
 	disabled = false,
+	reverse = false,
 	icon,
 	...props
 }: ButtonProps) {
@@ -46,7 +33,8 @@ export function Button({
 			{...props}
 			disabled={isLoading || disabled}
 			className={twMerge(
-				"transition-all duration-300 ease-in-out px-4 py-3 w-fit flex justify-center gap-2 items-center disabled:bg-opacity-70 disabled:cursor-not-allowed",
+				"transition-all duration-300 ease-in-out w-fit flex justify-center gap-2 items-center disabled:bg-opacity-70 disabled:cursor-not-allowed",
+				reverse ? "flex-row-reverse" : "flex-row",
 				typeClass,
 				sizeClass,
 				roundedClass,
