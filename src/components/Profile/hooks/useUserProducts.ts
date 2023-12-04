@@ -33,9 +33,13 @@ export function useUserProducts({ user }: useUserProductsProps) {
 			try {
 				setIsFetching(true);
 
-				const products = await ProductController.fetchListedProducts({
-					products: user.ownProducts,
-				});
+				const products = await ProductController.getListedProducts(
+					user.ownProducts,
+				);
+
+				if (!products) {
+					throw new Error("Error fetching user products");
+				}
 
 				setProducts(products);
 			} catch (error) {

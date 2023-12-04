@@ -49,10 +49,7 @@ export function ProductPage() {
 					defaultValues={product!}
 					onFormSubmit={async (data) => {
 						try {
-							await ProductController.updateProductDoc({
-								id: product!.id,
-								newData: data,
-							});
+							await ProductController.updateProductDoc(product!.id, data);
 
 							const editedProduct = new Product({
 								...product!,
@@ -81,9 +78,13 @@ export function ProductPage() {
 					return;
 				}
 
-				const product = await ProductController.readProductDoc(
+				const product = await ProductController.getProductDoc(
 					productId
 				);
+
+				if (!product) {
+					throw new Error(`Product with ID ${productId} was not found`)
+				}
 
 				setProduct(product);
 				setIsLoading(false);

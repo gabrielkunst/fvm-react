@@ -22,7 +22,12 @@ export function useUser() {
 					return;
 				}
 
-				const user = await UserController.readUserDoc({ userId });
+				const user = await UserController.getUserDoc(userId);
+				
+				if (!user) {
+					throw new Error("User not found")
+				}
+
 				setUser(user);
 				setIsLoading(false);
 			} catch (error) {

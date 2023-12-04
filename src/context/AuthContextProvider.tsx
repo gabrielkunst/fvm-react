@@ -1,4 +1,3 @@
-import { UserType } from "@/@types/UserType";
 import { Loading } from "@/components/Loading";
 import { auth } from "@/config/firebase";
 import { UserController } from "@/controllers/UserController";
@@ -47,20 +46,23 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 				return;
 			}
 
-			const userDocData = await UserController.readUserDoc({
-				userId: firebaseUser.uid,
-			});
+			try {
+				const loggedUser = await UserController.getUserDoc(
+					firebaseUser.uid,
+				);
 
-			if (!userDocData) {
+				if (!loggedUser) {
+					throw new Error("User doc not found")
+				}
+
+				login(loggedUser);
+				setIsLoading(false);
+			} catch (error) {
 				toast.error("Erro ao carregar usuário");
 				await auth.signOut();
+			} finally {
 				setIsLoading(false);
-				return;
 			}
-
-			const loggedUser = new User(userDocData as UserType);
-			login(loggedUser);
-			setIsLoading(false);
 		});
 
 		return () => unsubscribe();

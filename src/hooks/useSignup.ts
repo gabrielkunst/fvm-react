@@ -7,6 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router";
+import { UserType } from "@/@types/UserType";
 
 interface OnSignupParams {
 	name: string;
@@ -29,22 +30,18 @@ export function useSignup() {
 				password
 			);
 
-			const userData = {
+			const userData: UserType = {
 				email,
 				name,
-				userId: user.uid,
+				createdAt: new Date(),
+				id: user.uid,
+				ownProducts: []
 			};
 
-			const createdUserDoc = await UserController.createUserDoc(userData);
+			await UserController.createUserDoc(userData);
 
-			if (!createdUserDoc) {
-				throw new Error("Error creating user doc");
-			}
 
-			const loggedUser = new User({
-				...createdUserDoc,
-				id: user.uid,
-			});
+			const loggedUser = new User(userData);
 
 			login(loggedUser);
 

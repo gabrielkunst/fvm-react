@@ -2,12 +2,12 @@ import { ProductType, ProductTypeFromFirestore } from "@/@types/ProductType";
 import { firestore } from "@/config/firebase";
 import { Product } from "@/models/Product";
 import {
+	addDoc,
 	collection,
 	deleteDoc,
 	doc,
 	getDoc,
 	getDocs,
-	setDoc,
 	updateDoc,
 } from "firebase/firestore";
 
@@ -38,14 +38,18 @@ async function updateProductDoc(
 }
 
 async function createProductDoc(
-	productData: Partial<ProductType>
-): Promise<void> {
+	productData: ProductType
+): Promise<ProductType> {
 	const { id, ...restProductData } = productData;
 
 	const collectionRef = collection(firestore, "products");
-	const docRef = doc(collectionRef, id);
 
-	await setDoc(docRef, restProductData);
+	const createdProduct = await addDoc(collectionRef, restProductData);
+
+	return {
+		id: createdProduct.id,
+		...restProductData
+	}
 }
 
 async function deleteProductDoc(productId: string): Promise<void> {
@@ -73,10 +77,39 @@ async function getProductDoc(productId: string): Promise<Product> {
 	});
 }
 
+async function getListedProducts(products: string[]): Promise<Product[]> {
+
+	const collectionRef = collection(firestore, "products");
+	const productsData: Product[] = [];
+
+	for (const productId of products) {
+		const docRef = doc(collectionRef, productId);
+		const docSnapshot = await getDoc(docRef);
+
+		if (docSnapshot.exists()) {
+			const { createdAt, ...productData } = docSnapshot.data();
+			const formattedCreatedAt = new Date(createdAt.seconds * 1000);
+
+			productsData.push(
+				new Product({
+					...(productData as ProductType),
+					id: docSnapshot.id,
+					createdAt: formattedCreatedAt,
+				})
+			);
+		} else {
+			console.error(`Document with ID ${productId} not found.`);
+		}
+	}
+
+	return productsData;
+}
+
 export const ProductService = {
 	getAllProducts,
 	updateProductDoc,
 	createProductDoc,
 	deleteProductDoc,
 	getProductDoc,
+	getListedProducts,
 };

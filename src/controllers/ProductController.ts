@@ -128,7 +128,7 @@ interface FetchListedProductsParams {
 	products: string[];
 }
 
-async function fetchListedProducts({ products }: FetchListedProductsParams) {
+async function getListedProducts({ products }: FetchListedProductsParams) {
 	const collectionRef = collection(firestore, "products");
 
 	const productsData: Product[] = [];
@@ -162,7 +162,7 @@ export const ProductController = {
 	updateProductDoc,
 	deleteProductDoc,
 	readProductDoc,
-	fetchListedProducts,
+	getListedProducts,
 };
  */
 
@@ -180,13 +180,14 @@ async function getAllProducts(): Promise<Product[] | undefined> {
 	}
 }
 
-async function createProductDoc(productData: ProductType): Promise<void> {
+async function createProductDoc(productData: ProductType): Promise<ProductType | undefined> {
 	try {
 		if (!productData) {
 			throw new Error("No product data provided");
 		}
 
-		await ProductService.createProductDoc(productData);
+		const createdProduct = await ProductService.createProductDoc(productData);
+		return createdProduct;
 	} catch (error) {
 		console.error(error);
 	}
@@ -237,10 +238,21 @@ async function deleteProductDoc(productId: string): Promise<void> {
 	}
 }
 
+async function getListedProducts(productsId: string[]): Promise<Product[] | undefined> {
+	try {
+		const products = await ProductService.getListedProducts(productsId);
+		
+		return products;
+	} catch (error) {
+		console.error(error)
+	}
+}
+
 export const ProductController = {
 	getAllProducts,
 	createProductDoc,
 	getProductDoc,
 	updateProductDoc,
 	deleteProductDoc,
+	getListedProducts
 };
