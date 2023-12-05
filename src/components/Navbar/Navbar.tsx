@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { ProductForm } from "../ProductForm";
 import { ProductController } from "@/controllers/ProductController";
 import { UserController } from "@/controllers/UserController";
+import { ProductType } from "@/@types/ProductType";
 
 export function Navbar() {
 	const { openModal, closeModal } = useModal();
@@ -32,25 +33,31 @@ export function Navbar() {
 			content: (
 				<ProductForm
 					onFormSubmit={async (data) => {
-						const createdProduct =
-							await ProductController.createProductDoc({
-								userId: user!.id,
-								data,
-							});
-
-						if (!createdProduct) {
-							return;
+						const productData: ProductType = {
+							createdAt: new Date(),
+							description: data.description!,
+							id: "",
+							image: data.image!,
+							name: data.name!,
+							owner: user!.id,
+							priceInCents: data.priceInCents!
 						}
 
-						await UserController.updateUserDoc({
-							userId: user!.id,
-							newDocData: {
+						const createdProduct =
+							await ProductController.createProductDoc(productData);
+						
+						if (!createdProduct) {
+							throw new Error("Error creating product doc")
+						}
+						
+						const newUserData = {
 								ownProducts: [
 									...user!.ownProducts,
 									createdProduct.id,
 								],
-							},
-						});
+						}
+				
+						await UserController.updateUserDoc(user!.id, newUserData);
 
 						closeModal();
 					}}

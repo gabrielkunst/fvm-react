@@ -1,5 +1,4 @@
-export interface ProductType {
-	id: string;
+export interface ProductTypeFromFirestore {
 	name: string;
 	description: string;
 	priceInCents: number;
@@ -8,11 +7,6 @@ export interface ProductType {
 	owner: string;
 }
 
-export interface ProductFirestoreType {
-	name: string;
-	description: string;
-	priceInCents: number;
-	createdAt: Date;
-	image: string;
-	owner: string;
+export interface ProductType extends ProductTypeFromFirestore {
+	id: string;
 }
