@@ -60,10 +60,12 @@ export function ProductsContextProvider({
 		const fetchProducts = async () => {
 			try {
 				setIsLoading(true);
-				const products = await ProductController.fetchProducts({
-					sort,
-					categories,
-				});
+				const products = await ProductController.getAllProducts();
+
+				if (!products) {
+					throw new Error("Error setting products")
+				}
+
 				setProducts(products);
 			} catch (error) {
 				console.error(error);

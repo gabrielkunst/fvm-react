@@ -1,4 +1,4 @@
-import { UserType } from "@/@types/UserType";
+/* import { UserType } from "@/@types/UserType";
 import { firestore } from "@/config/firebase";
 import { User } from "@/models/User";
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
@@ -82,4 +82,65 @@ export const UserController = {
 	deleteUserDoc,
 	readUserDoc,
 	updateUserDoc,
+};
+ */
+
+import { UserType } from "@/@types/UserType";
+import { User } from "@/models/User";
+import { UserService } from "@/services/UserService";
+
+async function createUserDoc(userData: UserType): Promise<void> {
+	try {
+		if (!userData) {
+			throw new Error("User data not provided");
+		}
+
+		await UserService.createUserDoc(userData);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function getUserDoc(userId: string): Promise<User | undefined> {
+	try {
+		if (!userId) {
+			throw new Error("User ID was not provided");
+		}
+
+		const newUser = await UserService.getUserDoc(userId);
+
+		return newUser;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function updateUserDoc(
+	userId: string,
+	newUserData: Partial<UserType>
+): Promise<void> {
+	try {
+		if (!userId) {
+			throw new Error("User ID was not provided");
+		}
+
+		if (!newUserData) {
+			throw new Error("New user data not provided");
+		}
+
+		await UserService.updateUserDoc(userId, newUserData);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function deleteUserDoc(): Promise<void> {
+	// not implemented yet
+}
+
+export const UserController = {
+	createUserDoc,
+	getUserDoc,
+	updateUserDoc,
+	deleteUserDoc,
 };

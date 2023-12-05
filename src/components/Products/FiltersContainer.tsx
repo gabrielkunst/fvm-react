@@ -14,7 +14,7 @@ export function FiltersContainer() {
 	return (
 		<div className="flex flex-wrap items-center justify-between gap-2">
 			<PageTitle>Produtos {query && ` / ${query}`}</PageTitle>
-			<div className="flex items-center gap-2">
+			<div className="flex flex-wrap items-center gap-2">
 				<Button
 					onClick={handleResetQuery}
 					variation="outlined"
