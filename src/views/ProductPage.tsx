@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ProductController } from "@/controllers/ProductController";
 import { Product } from "@/models/Product";
@@ -49,7 +48,10 @@ export function ProductPage() {
 					defaultValues={product!}
 					onFormSubmit={async (data) => {
 						try {
-							await ProductController.updateProductDoc(product!.id, data);
+							await ProductController.updateProductDoc(
+								product!.id,
+								data
+							);
 
 							const editedProduct = new Product({
 								...product!,
@@ -83,7 +85,9 @@ export function ProductPage() {
 				);
 
 				if (!product) {
-					throw new Error(`Product with ID ${productId} was not found`)
+					throw new Error(
+						`Product with ID ${productId} was not found`
+					);
 				}
 
 				setProduct(product);

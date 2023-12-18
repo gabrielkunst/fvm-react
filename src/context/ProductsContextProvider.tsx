@@ -1,4 +1,5 @@
 import { SortObject } from "@/@types/SortObjectType";
+import { DEFAULT_SORT } from "@/constants/defaultSort";
 import { ProductController } from "@/controllers/ProductController";
 import { Product } from "@/models/Product";
 import { createContext, useEffect, useMemo, useState } from "react";
@@ -16,8 +17,8 @@ interface ProductsContextProps {
 	setQuery: React.Dispatch<React.SetStateAction<string>>;
 	setCategories: React.Dispatch<React.SetStateAction<string[]>>;
 	categories: string[];
-	setSort: React.Dispatch<React.SetStateAction<SortObject | undefined>>;
-	sort: SortObject | undefined;
+	setSort: React.Dispatch<React.SetStateAction<SortObject>>;
+	sort: SortObject;
 }
 
 export const ProductsContext = createContext<ProductsContextProps>({
@@ -26,7 +27,7 @@ export const ProductsContext = createContext<ProductsContextProps>({
 	query: "",
 	setQuery: () => {},
 	setSort: () => {},
-	sort: undefined,
+	sort: DEFAULT_SORT,
 	setCategories: () => {},
 	categories: [],
 });
@@ -36,7 +37,7 @@ export function ProductsContextProvider({
 }: ProductsContextProviderProps) {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [sort, setSort] = useState<SortObject>();
+	const [sort, setSort] = useState<SortObject>(DEFAULT_SORT);
 	const [categories, setCategories] = useState<string[]>([]);
 	const [query, setQuery] = useState<string>("");
 	const location = useLocation();
@@ -60,10 +61,10 @@ export function ProductsContextProvider({
 		const fetchProducts = async () => {
 			try {
 				setIsLoading(true);
-				const products = await ProductController.getAllProducts();
+				const products = await ProductController.getAllProducts(sort);
 
 				if (!products) {
-					throw new Error("Error setting products")
+					throw new Error("Error setting products");
 				}
 
 				setProducts(products);
@@ -87,7 +88,7 @@ export function ProductsContextProvider({
 
 		setQuery("");
 		setCategories([]);
-		setSort(undefined);
+		setSort(DEFAULT_SORT);
 	}, [location]);
 
 	return (

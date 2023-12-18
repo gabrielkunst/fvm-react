@@ -1,4 +1,5 @@
 import { ProductType, ProductTypeFromFirestore } from "@/@types/ProductType";
+import { SortObject } from "@/@types/SortObjectType";
 import { firestore } from "@/config/firebase";
 import { Product } from "@/models/Product";
 import {
@@ -8,13 +9,24 @@ import {
 	doc,
 	getDoc,
 	getDocs,
+	orderBy,
+	query,
 	updateDoc,
 } from "firebase/firestore";
 
-async function getAllProducts(): Promise<Product[]> {
+async function getAllProducts(sort: SortObject): Promise<Product[]> {
 	const collectionRef = collection(firestore, "products");
 
-	const productsSnapshot = await getDocs(collectionRef);
+	let customQuery = query(collectionRef);
+
+	if (sort) {
+		customQuery = query(
+			customQuery,
+			orderBy(sort.sortBy, sort.sortDirection)
+		);
+	}
+
+	const productsSnapshot = await getDocs(customQuery);
 
 	const products = productsSnapshot.docs.map((doc) => {
 		const productData = doc.data() as ProductTypeFromFirestore;
@@ -48,8 +60,8 @@ async function createProductDoc(
 
 	return {
 		id: createdProduct.id,
-		...restProductData
-	}
+		...restProductData,
+	};
 }
 
 async function deleteProductDoc(productId: string): Promise<void> {
@@ -78,7 +90,6 @@ async function getProductDoc(productId: string): Promise<Product> {
 }
 
 async function getListedProducts(products: string[]): Promise<Product[]> {
-
 	const collectionRef = collection(firestore, "products");
 	const productsData: Product[] = [];
 
