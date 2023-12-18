@@ -26,9 +26,10 @@ const SORT_OPTIONS: SortOptions[] = [
 
 interface SortDropdownProps {
 	setSort: (sortObject: SortObject) => void;
+	sort: SortObject;
 }
 
-export function SortDropdown({ setSort }: SortDropdownProps) {
+export function SortDropdown({ setSort, sort }: SortDropdownProps) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const dropdownButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -45,6 +46,16 @@ export function SortDropdown({ setSort }: SortDropdownProps) {
 		}
 
 		setIsDropdownOpen(false);
+	};
+
+	const handleSortOptionClick = (sortOption: SortObject) => {
+		setIsDropdownOpen(false);
+
+		if (sortOption.sortDirection === sort.sortDirection) {
+			return;
+		}
+
+		setSort(sortOption);
 	};
 
 	useEffect(() => {
@@ -74,8 +85,7 @@ export function SortDropdown({ setSort }: SortDropdownProps) {
 							key={label}
 							className="flex items-center justify-center gap-2 p-2 transition-all duration-200 hover:bg-gray-200"
 							onClick={() => {
-								setSort(value);
-								setIsDropdownOpen(false);
+								handleSortOptionClick(value);
 							}}
 						>
 							{label}

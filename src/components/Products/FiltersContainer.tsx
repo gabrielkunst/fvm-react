@@ -3,12 +3,19 @@ import { useProducts } from "@/hooks/useProducts";
 import { FilterOptions } from "./FilterOptions";
 import { XIcon } from "lucide-react";
 import { Button } from "../Button";
+import { DEFAULT_SORT } from "@/constants/defaultSort";
 
 export function FiltersContainer() {
-	const { setSort, query, setQuery } = useProducts();
+	const { setSort, query, setQuery, sort } = useProducts();
 
 	const handleResetQuery = () => {
 		setQuery("");
+
+		if (sort.sortDirection === DEFAULT_SORT.sortDirection) {
+			return;
+		}
+
+		setSort(DEFAULT_SORT);
 	};
 
 	return (
@@ -23,7 +30,7 @@ export function FiltersContainer() {
 				>
 					Limpar filtros
 				</Button>
-				<FilterOptions setSort={setSort} />
+				<FilterOptions setSort={setSort} sort={sort} />
 			</div>
 		</div>
 	);

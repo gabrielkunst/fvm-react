@@ -1,4 +1,5 @@
 import { SortObject } from "@/@types/SortObjectType";
+import { DEFAULT_SORT } from "@/constants/defaultSort";
 import { ProductController } from "@/controllers/ProductController";
 import { Product } from "@/models/Product";
 import { User } from "@/models/User";
@@ -12,7 +13,7 @@ interface useUserProductsProps {
 export function useUserProducts({ user }: useUserProductsProps) {
 	const [isFetching, setIsFetching] = useState(false);
 	const [products, setProducts] = useState<Product[]>([]);
-	const [sort, setSort] = useState<SortObject>();
+	const [sort, setSort] = useState<SortObject>(DEFAULT_SORT);
 
 	const sortedProducts = useMemo(() => {
 		if (!sort) {
@@ -34,7 +35,7 @@ export function useUserProducts({ user }: useUserProductsProps) {
 				setIsFetching(true);
 
 				const products = await ProductController.getListedProducts(
-					user.ownProducts,
+					user.ownProducts
 				);
 
 				if (!products) {
@@ -57,5 +58,6 @@ export function useUserProducts({ user }: useUserProductsProps) {
 		isFetching,
 		products: sortedProducts,
 		setSort,
+		sort,
 	};
 }

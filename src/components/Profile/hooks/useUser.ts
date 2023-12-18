@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { UserController } from "@/controllers/UserController";
 import { User } from "@/models/User";
 import { useEffect, useState } from "react";
@@ -23,9 +22,9 @@ export function useUser() {
 				}
 
 				const user = await UserController.getUserDoc(userId);
-				
+
 				if (!user) {
-					throw new Error("User not found")
+					throw new Error("User not found");
 				}
 
 				setUser(user);

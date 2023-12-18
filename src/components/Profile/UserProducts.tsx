@@ -10,13 +10,13 @@ interface UserProductsProps {
 }
 
 export function UserProducts({ user }: UserProductsProps) {
-	const { isFetching, products, setSort } = useUserProducts({ user });
+	const { isFetching, products, setSort, sort } = useUserProducts({ user });
 
 	return (
 		<section className="flex flex-col flex-1 gap-4 p-2 border rounded-lg">
 			<div className="flex flex-wrap items-center justify-between gap-2">
 				<h4 className="text-2xl font-semibold">Anúncios</h4>
-				<FilterOptions setSort={setSort} />
+				<FilterOptions setSort={setSort} sort={sort} />
 			</div>
 			<div
 				className={
